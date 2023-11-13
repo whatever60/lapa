@@ -63,9 +63,10 @@ class _GenomicRegions:
         df_gtf = df_gtf[df_gtf['Strand'].isin(gr.Strand.cat.categories)]
         gr_gtf = pr.PyRanges(df_gtf, int64=True)
 
-        gr_ann = pr.PyRanges(gr.df, int64=True).join(
-            gr_gtf, strandedness='same', how='left') \
-            .drop(['Start_b', 'End_b', 'Strand_b'])
+        #  gr_ann = pr.PyRanges(gr.df, int64=True).join(
+        #      gr_gtf, strandedness='same', how='left') \
+        #      .drop(['Start_b', 'End_b', 'Strand_b'])
+        gr_ann = pr.PyRanges(gr.df, int64=True).join(gr_gtf, how='left').drop(['Start_b', 'End_b', 'Strand_b'])
         df = gr_ann.df.drop_duplicates()
 
         df['Feature'] = df['Feature'].replace('-1', 'intergenic')
